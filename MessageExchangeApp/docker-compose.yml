@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15.0
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: messagesdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+
+  web:
+    build:
+      context: .
+    ports:
+      - "5001:8080"
+    depends_on:
+      - db
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ConnectionStrings__DefaultConnection: "Host=db;Database=messagesdb;Username=user;Password=password"
+    volumes:
+      - ./Logs:/app/Logs  # Mounts the Logs directory
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
