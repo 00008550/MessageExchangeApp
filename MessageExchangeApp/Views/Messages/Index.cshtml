@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h2>Welcome to the Message Exchange App</h2>
+
+<ul>
+    <li><a href="@Url.Action("RecentMessages", "Messages")">View Messages</a></li>
+    <li><a href="@Url.Action("SendMessage", "Messages")">Send a Message</a></li>
+    <li><a href="@Url.Action("RealTimeDisplay", "Messages")">Real-Time Messages</a></li>
+</ul>
